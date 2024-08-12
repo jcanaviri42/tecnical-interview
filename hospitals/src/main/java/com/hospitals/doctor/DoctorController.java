@@ -22,7 +22,7 @@ public class DoctorController {
         try {
             DoctorResponseDTO savedDoctorDTO = this.doctorService.saveDoctor(dto);
             if (savedDoctorDTO == null)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Doctor_already_exists");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_create_doctor");
             return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctorDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);

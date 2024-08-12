@@ -1,7 +1,6 @@
-package com.hospitals.doctor;
+package com.hospitals.hospital;
 
-import com.hospitals.hospital.Hospital;
-import com.hospitals.speciality.Speciality;
+import com.hospitals.doctor.Doctor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,17 +9,16 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "doctors")
-public class Doctor {
-
+@Table(name = "hospitals")
+public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +27,10 @@ public class Doctor {
     private String name;
 
     @Column(nullable = false)
-    private String lastName;
+    private String phone;
+
+    @Column(nullable = false)
+    private String email;
 
     @Transient
     private String gravatarUrl;
@@ -42,17 +43,8 @@ public class Doctor {
 
     private String updatedBy;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "doctors_specialities",
-            joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "speciality_id")
-    )
-    private Set<Speciality> specialities = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital;
+    @OneToMany(mappedBy = "hospital")
+    private List<Doctor> doctors = new ArrayList<>();
 
     public String getGravatarUrl() {
         if (this.gravatarUrl == null) {
@@ -62,5 +54,4 @@ public class Doctor {
 
         return gravatarUrl;
     }
-
 }

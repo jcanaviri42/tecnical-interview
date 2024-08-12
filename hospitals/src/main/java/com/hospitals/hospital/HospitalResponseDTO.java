@@ -1,16 +1,16 @@
-package com.hospitals.doctor;
+package com.hospitals.hospital;
 
 import java.time.LocalDate;
 
-public record DoctorResponseDTO(
+public record HospitalResponseDTO(
         Long id,
         String name,
-        String lastName,
+        String phone,
+        String email,
         String gravatarUrl,
         LocalDate createdAt,
         LocalDate updatedAt,
         String createdBy,
-        String updatedBy,
-        Long hospitalId
+        String updatedBy
 ) {
 }

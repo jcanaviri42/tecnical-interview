@@ -1,5 +1,7 @@
 package com.hospitals.doctor;
 
+import com.hospitals.hospital.Hospital;
+import com.hospitals.hospital.HospitalRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,10 +13,16 @@ import java.util.stream.Collectors;
 public class DoctorService {
 
     private final DoctorRepository doctorRepository;
+    private final HospitalRepository hospitalRepository;
     private final DoctorMapper doctorMapper;
 
-    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper) {
+    public DoctorService(
+            DoctorRepository doctorRepository,
+            HospitalRepository hospitalRepository,
+            DoctorMapper doctorMapper) {
+
         this.doctorRepository = doctorRepository;
+        this.hospitalRepository = hospitalRepository;
         this.doctorMapper = doctorMapper;
     }
 
@@ -23,12 +31,17 @@ public class DoctorService {
         if (this.doctorRepository.existsByName(dto.name()))
             return null;
 
+        Optional<Hospital> hospital = this.hospitalRepository.findById(dto.hospitalId());
+        if (hospital.isEmpty())
+            return null;
+
         try {
             Doctor doctor = Doctor.builder()
                     .name(dto.name())
                     .lastName(dto.lastName())
                     .createdAt(LocalDate.now())
                     .createdBy("user")
+                    .hospital(hospital.get())
                     .build();
 
             this.doctorRepository.save(doctor);
