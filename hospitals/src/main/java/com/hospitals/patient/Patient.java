@@ -1,7 +1,6 @@
-package com.hospitals.hospital;
+package com.hospitals.patient;
 
-import com.hospitals.doctor.Doctor;
-import com.hospitals.patient.Patient;
+import com.hospitals.hospital.Hospital;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,16 +9,15 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "hospitals")
-public class Hospital {
+@Table(name = "patients")
+public class Patient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,10 +26,13 @@ public class Hospital {
     private String name;
 
     @Column(nullable = false)
-    private String phone;
+    private String lastName;
 
     @Column(nullable = false)
-    private String email;
+    private String address;
+
+    @Column(nullable = false)
+    private LocalDate birthDate;
 
     @Transient
     private String gravatarUrl;
@@ -44,11 +45,9 @@ public class Hospital {
 
     private String updatedBy;
 
-    @OneToMany(mappedBy = "hospital")
-    private List<Doctor> doctors = new ArrayList<>();
-
-    @OneToMany(mappedBy = "hospital")
-    private List<Patient> patients = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
 
     public String getGravatarUrl() {
         if (this.gravatarUrl == null) {
@@ -58,4 +57,5 @@ public class Hospital {
 
         return gravatarUrl;
     }
+
 }
