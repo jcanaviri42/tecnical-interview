@@ -17,7 +17,7 @@ public class SpecialityService {
         this.specialityMapper = specialityMapper;
     }
 
-    public SpecialityResponseDTO saveSpecialty(SpecialityDTO dto) {
+    public SpecialityResponseDTO saveSpeciality(SpecialityDTO dto) {
 
         if (this.specialityRepository.existsByName(dto.name()))
             return null;
@@ -38,7 +38,7 @@ public class SpecialityService {
         }
     }
 
-    public List<SpecialityResponseDTO> findAllSpecialties() {
+    public List<SpecialityResponseDTO> findAllSpecialities() {
         return this.specialityRepository.findAll()
                 .stream()
                 .map(this.specialityMapper::toSpecialityDTO)
@@ -55,7 +55,7 @@ public class SpecialityService {
         }
     }
 
-    public SpecialityResponseDTO updateSpecialty(Long id, SpecialityDTO dto) {
+    public SpecialityResponseDTO updateSpeciality(Long id, SpecialityDTO dto) {
         try {
             Optional<Speciality> optionalSpeciality = this.specialityRepository.findById(id);
             if (optionalSpeciality.isEmpty()) return null;

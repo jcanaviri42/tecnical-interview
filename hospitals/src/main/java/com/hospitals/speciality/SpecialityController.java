@@ -18,9 +18,9 @@ public class SpecialityController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveSpecialty(@RequestBody SpecialityDTO dto) {
+    public ResponseEntity<?> saveSpeciality(@RequestBody SpecialityDTO dto) {
         try {
-            SpecialityResponseDTO savedSpecialityDTO = this.specialityService.saveSpecialty(dto);
+            SpecialityResponseDTO savedSpecialityDTO = this.specialityService.saveSpeciality(dto);
             if (savedSpecialityDTO == null)
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("speciality_already_exists");
             return ResponseEntity.status(HttpStatus.CREATED).body(savedSpecialityDTO);
@@ -31,17 +31,17 @@ public class SpecialityController {
     }
 
     @GetMapping
-    public List<SpecialityResponseDTO> findAllSpecialties() {
-        return this.specialityService.findAllSpecialties();
+    public List<SpecialityResponseDTO> findAllSpecialities() {
+        return this.specialityService.findAllSpecialities();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findSpecialityById(@PathVariable Long id) {
         try {
-            SpecialityResponseDTO specialtyDTO = this.specialityService.findSpecialityById(id);
-            if (specialtyDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("specialty_not_found");
-            return ResponseEntity.status(HttpStatus.OK).body(specialtyDTO);
+            SpecialityResponseDTO specialityDTO = this.specialityService.findSpecialityById(id);
+            if (specialityDTO == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("speciality_not_found");
+            return ResponseEntity.status(HttpStatus.OK).body(specialityDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -51,10 +51,10 @@ public class SpecialityController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateSpeciality(@PathVariable Long id, @RequestBody SpecialityDTO dto) {
         try {
-            SpecialityResponseDTO specialtyDTO = this.specialityService.updateSpecialty(id, dto);
-            if (specialtyDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("specialty_not_found");
-            return ResponseEntity.status(HttpStatus.OK).body(specialtyDTO);
+            SpecialityResponseDTO specialityDTO = this.specialityService.updateSpeciality(id, dto);
+            if (specialityDTO == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("speciality_not_found");
+            return ResponseEntity.status(HttpStatus.OK).body(specialityDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -66,7 +66,7 @@ public class SpecialityController {
         try {
             Boolean hasBeenDeleted = this.specialityService.deleteSpeciality(id);
             if (hasBeenDeleted == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("specialty_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("speciality_not_found");
 
             if (!hasBeenDeleted)
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");

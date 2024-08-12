@@ -1,6 +1,6 @@
-package com.hospitals.speciality;
+package com.hospitals.doctor;
 
-import com.hospitals.doctor.Doctor;
+import com.hospitals.speciality.Speciality;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,18 +17,18 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "specialities")
-public class Speciality {
+@Table(name = "doctors")
+public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private String description;
+    private String lastName;
 
     @Transient
     private String gravatarUrl;
@@ -41,8 +41,13 @@ public class Speciality {
 
     private String updatedBy;
 
-    @ManyToMany(mappedBy = "specialities")
-    private Set<Doctor> doctors = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "doctors_specialities",
+            joinColumns = @JoinColumn(name = "doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "speciality_id")
+    )
+    private Set<Speciality> specialities = new HashSet<>();
 
     public String getGravatarUrl() {
         if (this.gravatarUrl == null) {
