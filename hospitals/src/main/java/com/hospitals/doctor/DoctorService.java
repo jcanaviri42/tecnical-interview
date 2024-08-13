@@ -104,4 +104,40 @@ public class DoctorService {
         }
     }
 
+    public List<DoctorResponseDTO> findAllDoctorsByNameAndLastName(String name, String lastName) {
+        try {
+            return this.doctorRepository.findAllByNameAndLastNameContainingIgnoreCase(name, lastName)
+                    .stream()
+                    .map(this.doctorMapper::toDoctorResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
+    public List<DoctorResponseDTO> findAllDoctorsByName(String name) {
+        try {
+            return this.doctorRepository.findAllByNameContainingIgnoreCase(name)
+                    .stream()
+                    .map(this.doctorMapper::toDoctorResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
+    public List<DoctorResponseDTO> findAllDoctorsByLastName(String lastName) {
+        try {
+            return this.doctorRepository.findAllByLastNameContainingIgnoreCase(lastName)
+                    .stream()
+                    .map(this.doctorMapper::toDoctorResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.hospitals.patient;
 
 import com.hospitals.hospital.Hospital;
+import com.hospitals.note.Note;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -48,6 +51,9 @@ public class Patient {
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Note> notes = new ArrayList<>();
 
     public String getGravatarUrl() {
         if (this.gravatarUrl == null) {

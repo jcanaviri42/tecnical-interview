@@ -78,4 +78,30 @@ public class DoctorController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByName(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "lastName", required = false) String lastName) {
+
+        try {
+            if (name != null && lastName != null) {
+                List<DoctorResponseDTO> doctors = this.doctorService.findAllDoctorsByNameAndLastName(name, lastName);
+                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+            if (name != null) {
+                List<DoctorResponseDTO> doctors = this.doctorService.findAllDoctorsByName(name);
+                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+            if (lastName != null) {
+                List<DoctorResponseDTO> doctors = this.doctorService.findAllDoctorsByLastName(lastName);
+                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("any_doctor_found");
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
 }

@@ -106,4 +106,40 @@ public class PatientService {
         }
     }
 
+    public List<PatientResponseDTO> findAllPatientsByNameAndLastName(String name, String lastName) {
+        try {
+            return this.patientRepository.findAllByNameAndLastNameContainingIgnoreCase(name, lastName)
+                    .stream()
+                    .map(this.patientMapper::toPatientResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error", e);
+        }
+    }
+
+    public List<PatientResponseDTO> findAllPatientByName(String name) {
+        try {
+            return this.patientRepository.findAllByNameContainingIgnoreCase(name)
+                    .stream()
+                    .map(this.patientMapper::toPatientResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error", e);
+        }
+    }
+
+    public List<PatientResponseDTO> findAllPatientByLastName(String lastName) {
+        try {
+            return this.patientRepository.findAllByLastNameContainingIgnoreCase(lastName)
+                    .stream()
+                    .map(this.patientMapper::toPatientResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error", e);
+        }
+    }
+
 }

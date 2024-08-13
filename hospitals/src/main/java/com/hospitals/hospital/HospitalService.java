@@ -93,4 +93,15 @@ public class HospitalService {
         }
     }
 
+    public List<HospitalResponseDTO> findByName(String q) {
+        try {
+            return this.hospitalRepository.findAllByNameContainingIgnoreCase(q)
+                    .stream()
+                    .map(this.hospitalMapper::toHospitalResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
 }

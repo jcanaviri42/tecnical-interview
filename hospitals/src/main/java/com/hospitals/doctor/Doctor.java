@@ -1,6 +1,7 @@
 package com.hospitals.doctor;
 
 import com.hospitals.hospital.Hospital;
+import com.hospitals.note.Note;
 import com.hospitals.speciality.Speciality;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -53,6 +56,9 @@ public class Doctor {
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Note> notes = new ArrayList<>();
 
     public String getGravatarUrl() {
         if (this.gravatarUrl == null) {

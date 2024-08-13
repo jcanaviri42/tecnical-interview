@@ -30,7 +30,6 @@ public class Hospital {
     @Column(nullable = false)
     private String phone;
 
-    @Column(nullable = false)
     private String email;
 
     @Transient

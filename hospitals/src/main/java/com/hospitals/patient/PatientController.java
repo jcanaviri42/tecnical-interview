@@ -1,5 +1,6 @@
 package com.hospitals.patient;
 
+import com.hospitals.doctor.DoctorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +73,32 @@ public class PatientController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");
 
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByName(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "lastName", required = false) String lastName) {
+
+        try {
+            if (name != null && lastName != null) {
+                List<PatientResponseDTO> doctors = this.patientService.findAllPatientsByNameAndLastName(name, lastName);
+                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+            if (name != null) {
+                List<PatientResponseDTO> doctors = this.patientService.findAllPatientByName(name);
+                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+            if (lastName != null) {
+                List<PatientResponseDTO> doctors = this.patientService.findAllPatientByLastName(lastName);
+                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("any_patient_found");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

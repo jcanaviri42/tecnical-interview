@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/hospitals")
+@SuppressWarnings("unused")
 public class HospitalController {
 
     private final HospitalService hospitalService;
@@ -71,6 +72,17 @@ public class HospitalController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");
 
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByName(@RequestParam("q") String q) {
+        try {
+            List<HospitalResponseDTO> hospitals = this.hospitalService.findByName(q);
+            return ResponseEntity.status(HttpStatus.OK).body(hospitals);
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
