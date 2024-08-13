@@ -1,5 +1,6 @@
 package com.hospitals.doctor;
 
+import com.hospitals.patient.PatientResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -85,7 +86,7 @@ public class DoctorController {
             @RequestParam(value = "lastName", required = false) String lastName,
             @RequestParam(value = "startDate", required = false) LocalDate startDate,
             @RequestParam(value = "endDate", required = false) LocalDate endDate
-            ) {
+    ) {
 
         try {
             if (name != null && lastName != null) {
@@ -107,6 +108,17 @@ public class DoctorController {
             }
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("any_doctor_found");
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}/patients")
+    public ResponseEntity<?> getAllPatientsByDoctor(@PathVariable Long id) {
+        try {
+            List<PatientResponseDTO> allPatients = this.doctorService.findAllPatients(id);
+            return ResponseEntity.status(HttpStatus.OK).body(allPatients);
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

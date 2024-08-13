@@ -2,6 +2,8 @@ package com.hospitals.doctor;
 
 import com.hospitals.hospital.Hospital;
 import com.hospitals.hospital.HospitalRepository;
+import com.hospitals.patient.PatientMapper;
+import com.hospitals.patient.PatientResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,15 +17,18 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final HospitalRepository hospitalRepository;
     private final DoctorMapper doctorMapper;
+    private final PatientMapper patientMapper;
 
     public DoctorService(
             DoctorRepository doctorRepository,
             HospitalRepository hospitalRepository,
-            DoctorMapper doctorMapper) {
+            DoctorMapper doctorMapper,
+            PatientMapper patientMapper) {
 
         this.doctorRepository = doctorRepository;
         this.hospitalRepository = hospitalRepository;
         this.doctorMapper = doctorMapper;
+        this.patientMapper = patientMapper;
     }
 
     public DoctorResponseDTO saveDoctor(DoctorDTO dto) {
@@ -151,4 +156,23 @@ public class DoctorService {
             throw new RuntimeException("Unexpected error deleting hospital", e);
         }
     }
+
+    public List<PatientResponseDTO> findAllPatients(Long id) {
+        try {
+            Optional<Doctor> optionalDoctor = this.doctorRepository.findById(id);
+            if (optionalDoctor.isEmpty()) return null;
+
+            Doctor doctor = optionalDoctor.get();
+            return doctor.getNotes()
+                    .stream()
+                    .map(note -> this.patientMapper.toPatientResponseDTO(note.getPatient()))
+                    .distinct()
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
 }

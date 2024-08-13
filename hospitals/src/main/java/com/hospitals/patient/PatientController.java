@@ -1,5 +1,6 @@
 package com.hospitals.patient;
 
+import com.hospitals.doctor.DoctorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -115,6 +116,17 @@ public class PatientController {
             }
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("any_patient_found");
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}/doctors")
+    public ResponseEntity<?> getAllDoctorsByPatient(@PathVariable Long id) {
+        try {
+            List<DoctorResponseDTO> allDoctors = this.patientService.findAllDoctors(id);
+            return ResponseEntity.status(HttpStatus.OK).body(allDoctors);
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

@@ -1,5 +1,7 @@
 package com.hospitals.patient;
 
+import com.hospitals.doctor.Doctor;
+import com.hospitals.doctor.DoctorMapper;
 import com.hospitals.doctor.DoctorResponseDTO;
 import com.hospitals.hospital.Hospital;
 import com.hospitals.hospital.HospitalRepository;
@@ -16,15 +18,18 @@ public class PatientService {
     private final PatientRepository patientRepository;
     private final HospitalRepository hospitalRepository;
     private final PatientMapper patientMapper;
+    private final DoctorMapper doctorMapper;
 
     public PatientService(
             PatientRepository patientRepository,
             HospitalRepository hospitalRepository,
-            PatientMapper patientMapper) {
+            PatientMapper patientMapper,
+            DoctorMapper doctorMapper) {
 
         this.patientRepository = patientRepository;
         this.hospitalRepository = hospitalRepository;
         this.patientMapper = patientMapper;
+        this.doctorMapper = doctorMapper;
     }
 
     public PatientResponseDTO savePatient(PatientDTO dto) {
@@ -166,4 +171,23 @@ public class PatientService {
             throw new RuntimeException("Unexpected error", e);
         }
     }
+
+    public List<DoctorResponseDTO> findAllDoctors(Long id) {
+        try {
+            Optional<Patient> optionalPatient = this.patientRepository.findById(id);
+            if (optionalPatient.isEmpty()) return null;
+
+            Patient patient = optionalPatient.get();
+            return patient.getNotes()
+                    .stream()
+                    .map(note -> this.doctorMapper.toDoctorResponseDTO(note.getDoctor()))
+                    .distinct()
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
 }
