@@ -104,4 +104,16 @@ public class HospitalService {
             throw new RuntimeException("Unexpected error deleting hospital", e);
         }
     }
+
+    public List<HospitalResponseDTO> findByCreatedAtBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            return this.hospitalRepository.findAllByCreatedAtBetween(startDate, endDate)
+                    .stream()
+                    .map(this.hospitalMapper::toHospitalResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error", e);
+        }
+    }
 }

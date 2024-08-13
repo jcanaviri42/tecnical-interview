@@ -1,10 +1,10 @@
 package com.hospitals.patient;
 
-import com.hospitals.doctor.DoctorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -82,7 +82,10 @@ public class PatientController {
     @GetMapping("/search")
     public ResponseEntity<?> searchByName(
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "lastName", required = false) String lastName) {
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "startDate", required = false) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) LocalDate endDate
+    ) {
 
         try {
             if (name != null && lastName != null) {
@@ -96,6 +99,19 @@ public class PatientController {
             if (lastName != null) {
                 List<PatientResponseDTO> doctors = this.patientService.findAllPatientByLastName(lastName);
                 return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+            if (startDate != null && endDate != null) {
+
+                List<PatientResponseDTO> doctorsByCreation = this.patientService
+                        .findAllByCreatedAtBetween(startDate, endDate);
+                if (!doctorsByCreation.isEmpty())
+                    return ResponseEntity.status(HttpStatus.OK).body(doctorsByCreation);
+
+                List<PatientResponseDTO> doctorsByBirthDate = this.patientService
+                        .findAllByBirthDateBetween(startDate, endDate);
+                if (!doctorsByBirthDate.isEmpty())
+                    return ResponseEntity.status(HttpStatus.OK).body(doctorsByBirthDate);
+
             }
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("any_patient_found");

@@ -3,6 +3,7 @@ package com.hospitals.doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -15,5 +16,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     List<Doctor> findAllByNameContainingIgnoreCase(String name);
 
     List<Doctor> findAllByLastNameContainingIgnoreCase(String name);
+
+    List<Doctor> findAllByCreatedAtBetween(LocalDate startDate, LocalDate endDate);
 
 }

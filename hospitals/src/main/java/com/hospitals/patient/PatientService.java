@@ -1,5 +1,6 @@
 package com.hospitals.patient;
 
+import com.hospitals.doctor.DoctorResponseDTO;
 import com.hospitals.hospital.Hospital;
 import com.hospitals.hospital.HospitalRepository;
 import org.springframework.stereotype.Service;
@@ -142,4 +143,27 @@ public class PatientService {
         }
     }
 
+    public List<PatientResponseDTO> findAllByCreatedAtBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            return this.patientRepository.findAllByCreatedAtBetween(startDate, endDate)
+                    .stream()
+                    .map(this.patientMapper::toPatientResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error", e);
+        }
+    }
+
+    public List<PatientResponseDTO> findAllByBirthDateBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            return this.patientRepository.findAllByBirthDateBetween(startDate, endDate)
+                    .stream()
+                    .map(this.patientMapper::toPatientResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error", e);
+        }
+    }
 }

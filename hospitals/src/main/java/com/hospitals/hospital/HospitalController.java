@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -79,14 +80,26 @@ public class HospitalController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchByName(@RequestParam("q") String q) {
+    public ResponseEntity<?> searchByName(
+            @RequestParam(value = "q", required = false) String q,
+            @RequestParam(value = "startDate", required = false) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) LocalDate endDate
+    ) {
         try {
-            List<HospitalResponseDTO> hospitals = this.hospitalService.findByName(q);
-            return ResponseEntity.status(HttpStatus.OK).body(hospitals);
+            if (q != null) {
+                List<HospitalResponseDTO> hospitals = this.hospitalService.findByName(q);
+                return ResponseEntity.status(HttpStatus.OK).body(hospitals);
+            }
+
+            if (startDate != null && endDate != null) {
+                List<HospitalResponseDTO> hospitals = this.hospitalService
+                        .findByCreatedAtBetween(startDate, endDate);
+                return ResponseEntity.status(HttpStatus.OK).body(hospitals);
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not_found");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
-
 }

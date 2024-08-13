@@ -140,4 +140,15 @@ public class DoctorService {
         }
     }
 
+    public List<DoctorResponseDTO> findAllByCreatedAtBetween(LocalDate startDate, LocalDate endDate) {
+        try {
+            return this.doctorRepository.findAllByCreatedAtBetween(startDate, endDate)
+                    .stream()
+                    .map(this.doctorMapper::toDoctorResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
 }

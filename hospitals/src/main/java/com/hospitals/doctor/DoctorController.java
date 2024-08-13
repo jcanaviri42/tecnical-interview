@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -81,7 +82,10 @@ public class DoctorController {
     @GetMapping("/search")
     public ResponseEntity<?> searchByName(
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "lastName", required = false) String lastName) {
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "startDate", required = false) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) LocalDate endDate
+            ) {
 
         try {
             if (name != null && lastName != null) {
@@ -94,6 +98,11 @@ public class DoctorController {
             }
             if (lastName != null) {
                 List<DoctorResponseDTO> doctors = this.doctorService.findAllDoctorsByLastName(lastName);
+                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+            }
+
+            if (startDate != null && endDate != null) {
+                List<DoctorResponseDTO> doctors = this.doctorService.findAllByCreatedAtBetween(startDate, endDate);
                 return ResponseEntity.status(HttpStatus.OK).body(doctors);
             }
 
