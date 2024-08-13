@@ -1,1 +1,10 @@
-<p>specialities works!</p>
+<strong>List of specialities</strong>
+<ul>
+  @for (speciality of specialities; track $index; let i = $index) {
+  <li>
+    {{ i + 1 }}: {{ speciality.name }} - {{ speciality.description }}
+
+    <img [src]="speciality.gravatarUrl" alt="" />
+  </li>
+  }
+</ul>

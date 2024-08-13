@@ -47,7 +47,7 @@ public class Speciality {
     public String getGravatarUrl() {
         if (this.gravatarUrl == null) {
             var hash = DigestUtils.md5Hex(this.name.toLowerCase().trim());
-            gravatarUrl = "https://www.gravatar.com/avatar/" + hash + "?s=80&d=mm";
+            gravatarUrl = "https://www.gravatar.com/avatar/" + hash + "?s=80&d=identicon";
         }
 
         return gravatarUrl;

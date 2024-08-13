@@ -1,1 +1,20 @@
-<p>hospitals works!</p>
+<strong>Hospital List</strong>
+<table>
+  <thead>
+    <th>#</th>
+    <th>Name</th>
+    <th>Phne Number</th>
+    <th>Logo</th>
+  </thead>
+
+  <tbody>
+    @for (hospital of hospitals; track hospital; let index = $index) {
+    <tr>
+      <td>{{ index + 1 }}</td>
+      <td>{{ hospital.name }}</td>
+      <td>{{ hospital.phone }}</td>
+      <td> <img [src]="hospital.gravatarUrl" alt="" srcset=""></td>
+    </tr>
+    }
+  </tbody>
+</table>
