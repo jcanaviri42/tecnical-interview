@@ -1,0 +1,19 @@
+<form [formGroup]="hospitalForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" />
+  </div>
+  <div>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" formControlName="phone" />
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="text" id="email" formControlName="email" />
+  </div>
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+  <button type="submit" [disabled]="hospitalForm.invalid">Create Hospital</button>
+</form>
+

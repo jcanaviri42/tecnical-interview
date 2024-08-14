@@ -23,7 +23,7 @@ public class HospitalController {
         try {
             HospitalResponseDTO savedHospitalDTO = this.hospitalService.saveHospital(dto);
             if (savedHospitalDTO == null)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Hospital_already_exists");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Hospital already exists.");
             return ResponseEntity.status(HttpStatus.CREATED).body(savedHospitalDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -41,7 +41,7 @@ public class HospitalController {
         try {
             HospitalResponseDTO hospitalDTO = this.hospitalService.findHospitalById(id);
             if (hospitalDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital not found.");
             return ResponseEntity.status(HttpStatus.OK).body(hospitalDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -54,7 +54,7 @@ public class HospitalController {
         try {
             HospitalResponseDTO hospitalDTO = this.hospitalService.updateHospital(id, dto);
             if (hospitalDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital not found.");
             return ResponseEntity.status(HttpStatus.OK).body(hospitalDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -67,12 +67,12 @@ public class HospitalController {
         try {
             Boolean hasBeenDeleted = this.hospitalService.deleteHospital(id);
             if (hasBeenDeleted == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital not found.");
 
             if (!hasBeenDeleted)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't delete.");
 
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Hospital deleted.");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -96,7 +96,7 @@ public class HospitalController {
                         .findByCreatedAtBetween(startDate, endDate);
                 return ResponseEntity.status(HttpStatus.OK).body(hospitals);
             }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not_found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Any hospital found.");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

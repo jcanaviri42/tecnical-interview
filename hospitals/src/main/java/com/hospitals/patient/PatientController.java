@@ -24,7 +24,7 @@ public class PatientController {
         try {
             PatientResponseDTO savedPatientDTO = this.patientService.savePatient(dto);
             if (savedPatientDTO == null)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_create_Patient");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't create the patient");
             return ResponseEntity.status(HttpStatus.CREATED).body(savedPatientDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -42,7 +42,7 @@ public class PatientController {
         try {
             PatientResponseDTO patientDTO = this.patientService.findPatientById(id);
             if (patientDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found.");
             return ResponseEntity.status(HttpStatus.OK).body(patientDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -55,7 +55,7 @@ public class PatientController {
         try {
             PatientResponseDTO patientDTO = this.patientService.updatePatient(id, dto);
             if (patientDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found.");
             return ResponseEntity.status(HttpStatus.OK).body(patientDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -68,10 +68,10 @@ public class PatientController {
         try {
             Boolean hasBeenDeleted = this.patientService.deletePatient(id);
             if (hasBeenDeleted == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found.");
 
             if (!hasBeenDeleted)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't delete the patient");
 
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class PatientController {
 
             }
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("any_patient_found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Any patient found.");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

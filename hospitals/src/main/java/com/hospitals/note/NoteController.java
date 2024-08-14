@@ -22,7 +22,7 @@ public class NoteController {
         try {
             NoteResponseDTO savedNoteDTO = this.noteService.saveNote(dto);
             if (savedNoteDTO == null)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_create_Note");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't create a note");
             return ResponseEntity.status(HttpStatus.CREATED).body(savedNoteDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -40,7 +40,7 @@ public class NoteController {
         try {
             NoteResponseDTO noteDTO = this.noteService.findNoteById(id);
             if (noteDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found.");
             return ResponseEntity.status(HttpStatus.OK).body(noteDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -53,7 +53,7 @@ public class NoteController {
         try {
             NoteResponseDTO noteDTO = this.noteService.updateNote(id, dto);
             if (noteDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found.");
             return ResponseEntity.status(HttpStatus.OK).body(noteDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -66,12 +66,12 @@ public class NoteController {
         try {
             Boolean hasBeenDeleted = this.noteService.deleteNote(id);
             if (hasBeenDeleted == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Note not found.");
 
             if (!hasBeenDeleted)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't delete the note.");
 
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Note deleted.");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

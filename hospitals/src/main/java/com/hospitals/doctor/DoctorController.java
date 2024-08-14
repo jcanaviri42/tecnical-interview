@@ -24,7 +24,7 @@ public class DoctorController {
         try {
             DoctorResponseDTO savedDoctorDTO = this.doctorService.saveDoctor(dto);
             if (savedDoctorDTO == null)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_create_doctor");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't create doctor.");
             return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctorDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -42,7 +42,7 @@ public class DoctorController {
         try {
             DoctorResponseDTO DoctorDTO = this.doctorService.findDoctorById(id);
             if (DoctorDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found.");
             return ResponseEntity.status(HttpStatus.OK).body(DoctorDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -55,7 +55,7 @@ public class DoctorController {
         try {
             DoctorResponseDTO DoctorDTO = this.doctorService.updateDoctor(id, dto);
             if (DoctorDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found.");
             return ResponseEntity.status(HttpStatus.OK).body(DoctorDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -68,12 +68,12 @@ public class DoctorController {
         try {
             Boolean hasBeenDeleted = this.doctorService.deleteDoctor(id);
             if (hasBeenDeleted == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found.");
 
             if (!hasBeenDeleted)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't delete.");
 
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Doctor deleted.");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -107,7 +107,7 @@ public class DoctorController {
                 return ResponseEntity.status(HttpStatus.OK).body(doctors);
             }
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("any_doctor_found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Any doctor found.");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

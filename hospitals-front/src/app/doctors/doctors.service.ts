@@ -25,4 +25,11 @@ export class DoctorsService {
     const doctorsUrl = `${this.BASE_URL}/doctors/${id}`;
     return this.http.put<Doctor>(doctorsUrl, doctor);
   }
+
+  createDoctor(doctor: Doctor): Observable<Doctor> {
+    const doctorsUrl = `${this.BASE_URL}/doctors`;
+    console.log('doctor =', doctor);
+
+    return this.http.post<Doctor>(doctorsUrl, doctor);
+  }
 }

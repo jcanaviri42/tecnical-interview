@@ -22,7 +22,7 @@ public class SpecialityController {
         try {
             SpecialityResponseDTO savedSpecialityDTO = this.specialityService.saveSpeciality(dto);
             if (savedSpecialityDTO == null)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("speciality_already_exists");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("The speciality already exists.");
             return ResponseEntity.status(HttpStatus.CREATED).body(savedSpecialityDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -40,7 +40,7 @@ public class SpecialityController {
         try {
             SpecialityResponseDTO specialityDTO = this.specialityService.findSpecialityById(id);
             if (specialityDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("speciality_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Speciality not found");
             return ResponseEntity.status(HttpStatus.OK).body(specialityDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -53,7 +53,7 @@ public class SpecialityController {
         try {
             SpecialityResponseDTO specialityDTO = this.specialityService.updateSpeciality(id, dto);
             if (specialityDTO == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("speciality_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Speciality not found");
             return ResponseEntity.status(HttpStatus.OK).body(specialityDTO);
         } catch (Exception e) {
             System.out.println("e = " + e);
@@ -66,12 +66,12 @@ public class SpecialityController {
         try {
             Boolean hasBeenDeleted = this.specialityService.deleteSpeciality(id);
             if (hasBeenDeleted == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("speciality_not_found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Speciality not found");
 
             if (!hasBeenDeleted)
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("could_not_delete");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Couldn't not delete");
 
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("deleted");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Speciality deleted");
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

@@ -1,0 +1,16 @@
+<form [formGroup]="specialityForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" />
+  </div>
+  <div>
+    <label for="description">Description:</label>
+    <input type="text" id="description" formControlName="description" />
+  </div>
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+  <button type="submit" [disabled]="specialityForm.invalid">
+    Create Speciality
+  </button>
+</form>

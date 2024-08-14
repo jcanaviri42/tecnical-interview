@@ -1,0 +1,30 @@
+<form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" />
+  </div>
+  <div>
+    <label for="name">Last Name:</label>
+    <input type="text" id="lastName" formControlName="lastName" />
+  </div>
+  <div formArrayName="specialitiesIds">
+    @for (speciality of specialities; track $index; let i = $index) {
+    {{ speciality.name }} <input type="checkbox" [formControlName]="i" />
+    <br />
+    }
+  </div>
+  <div>
+    <label for="hospitalId">Hospital:</label>
+    <select formControlName="hospitalId">
+      @for (hospital of hospitals; track $index) {
+      <option [value]="hospital.id">
+        {{ hospital.name }}
+      </option>
+      }
+    </select>
+  </div>
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+  <button type="submit" [disabled]="doctorForm.invalid">Create Doctor</button>
+</form>
