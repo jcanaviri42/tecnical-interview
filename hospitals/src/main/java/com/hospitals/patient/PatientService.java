@@ -1,6 +1,5 @@
 package com.hospitals.patient;
 
-import com.hospitals.doctor.Doctor;
 import com.hospitals.doctor.DoctorMapper;
 import com.hospitals.doctor.DoctorResponseDTO;
 import com.hospitals.hospital.Hospital;
@@ -82,18 +81,20 @@ public class PatientService {
             Optional<Patient> optionalPatient = this.patientRepository.findById(id);
             if (optionalPatient.isEmpty()) return null;
 
-            Patient Patient = optionalPatient.get();
+            Patient patient = optionalPatient.get();
 
-            if (dto.name() != null) Patient.setName(dto.name());
-            if (dto.lastName() != null) Patient.setLastName(dto.lastName());
+            if (dto.name() != null) patient.setName(dto.name());
+            if (dto.lastName() != null) patient.setLastName(dto.lastName());
+            if (dto.address() != null) patient.setAddress(dto.address());
+            if (dto.birthDate() != null) patient.setBirthDate(dto.birthDate());
 
-            Patient.setUpdatedAt(LocalDate.now());
+            patient.setUpdatedAt(LocalDate.now());
             // TODO: Get the current user
-            Patient.setUpdatedBy("user");
+            patient.setUpdatedBy("user");
 
-            this.patientRepository.save(Patient);
+            this.patientRepository.save(patient);
 
-            return this.patientMapper.toPatientResponseDTO(Patient);
+            return this.patientMapper.toPatientResponseDTO(patient);
         } catch (Exception e) {
             System.out.println("e = " + e);
             throw new RuntimeException("Unexpected error saving Patient", e);

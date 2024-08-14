@@ -7,4 +7,5 @@ export interface Doctor {
   updatedAt?: string;
   createdBy?: string;
   updatedBy?: string;
+  hospitalid?: number;
 }

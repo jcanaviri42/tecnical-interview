@@ -20,4 +20,9 @@ export class PatientsService {
     const patientUrl = `${this.BASE_URL}/patients/${id}`;
     return this.http.get<Patient>(patientUrl);
   }
+
+  updatePatient(id: number, patient: Patient): Observable<Patient> {
+    const patientUrl = `${this.BASE_URL}/patients/${id}`;
+    return this.http.put<Patient>(patientUrl, patient);
+  }
 }

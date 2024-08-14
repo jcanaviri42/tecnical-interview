@@ -3,6 +3,16 @@
   <li>
     {{ patient.id }}
   </li>
+
+  <form [formGroup]="patientForm">
+    <input type="text" id="name" formControlName="name" />
+    <input type="text" id="lastName" formControlName="lastName" />
+    <input type="text" id="address" formControlName="address" />
+    <input type="date" id="birthDate" formControlName="birthDate" />
+
+    <button type="submit" (click)="onUpdate()">Save</button>
+  </form>
+
   <li>
     {{ patient.name }}
   </li>
@@ -14,7 +24,6 @@
   </li>
   <li>
     <img [src]="patient.gravatarUrl" alt="" />
-
   </li>
   <li>
     {{ patient.createdAt }}

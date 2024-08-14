@@ -1,33 +1,32 @@
-<ul>
-  @if (hospital) {
-  <li>
-    {{ hospital.id }}
-  </li>
-  <li>
-    {{ hospital.name }}
-  </li>
-  <li>
-    {{ hospital.phone }}
-  </li>
-  <li>
-    {{ hospital.email }}
-  </li>
-  <li>
-    <img [src]="hospital.gravatarUrl" alt="" />
-  </li>
-  <li>
-    {{ hospital.createdAt }}
-  </li>
-  <li>
-    {{ hospital.updatedAt }}
-  </li>
-  <li>
-    {{ hospital.createdBy }}
-  </li>
-  <li>
-    {{ hospital.updatedBy }}
-  </li>
-  } @else {
-    <p>Loading...</p>
-  }
-</ul>
+@if (hospital) {
+
+<p>
+  <img [src]="hospital.gravatarUrl" alt="" />
+</p>
+<p>
+  {{ hospital.createdAt }}
+</p>
+<p>
+  {{ hospital.updatedAt }}
+</p>
+<p>
+  {{ hospital.createdBy }}
+</p>
+<p>
+  {{ hospital.updatedBy }}
+</p>
+
+<form [formGroup]="hospitalForm">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name" />
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" formControlName="phone" />
+    <label for="name">email:</label>
+    <input type="email" id="email" formControlName="email" />
+  </div>
+  <button type="submit" (click)="onUpdate()">Save</button>
+</form>
+} @else {
+<p>Loading...</p>
+}

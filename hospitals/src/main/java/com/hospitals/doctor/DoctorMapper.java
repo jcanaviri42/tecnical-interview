@@ -15,7 +15,8 @@ public class DoctorMapper {
                 doctor.getUpdatedAt(),
                 doctor.getCreatedBy(),
                 doctor.getUpdatedBy(),
-                doctor.getHospital().getId()
+                doctor.getHospital().getId(),
+                doctor.getSpecialities()
         );
     }
 

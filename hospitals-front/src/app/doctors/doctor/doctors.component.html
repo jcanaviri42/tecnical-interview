@@ -3,12 +3,28 @@
   <li>
     {{ doctor.id }}
   </li>
-  <li>
-    {{ doctor.name }}
-  </li>
-  <li>
-    {{ doctor.lastName }}
-  </li>
+
+  <form [formGroup]="doctorForm">
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+    />
+    <input
+      type="text"
+      id="lastName"
+      formControlName="lastName"
+    />
+
+    Select the hospital
+    <select formControlName="hospitalId">
+      @for (h of hospitals; track $index) {
+      <option [value]="h.id">{{ h.name }}</option>
+      }
+    </select>
+
+    <button type="submit" (click)="onUpdate()">Save</button>
+  </form>
   <li>
     <img [src]="doctor.gravatarUrl" alt="" />
   </li>

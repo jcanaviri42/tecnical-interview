@@ -20,4 +20,9 @@ export class SpecialitiesService {
     const specialitiesUrl = `${this.BASE_URL}/specialities/${id}`;
     return this.http.get<Speciality>(specialitiesUrl);
   }
+
+  updateSpeciality(id: number, speciality: Speciality): Observable<Speciality> {
+    const specialitiesUrl = `${this.BASE_URL}/specialities/${id}`;
+    return this.http.put<Speciality>(specialitiesUrl, speciality);
+  }
 }

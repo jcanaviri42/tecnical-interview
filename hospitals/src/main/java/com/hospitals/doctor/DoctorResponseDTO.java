@@ -1,6 +1,9 @@
 package com.hospitals.doctor;
 
+import com.hospitals.speciality.Speciality;
+
 import java.time.LocalDate;
+import java.util.Set;
 
 public record DoctorResponseDTO(
         Long id,
@@ -11,6 +14,7 @@ public record DoctorResponseDTO(
         LocalDate updatedAt,
         String createdBy,
         String updatedBy,
-        Long hospitalId
+        Long hospitalId,
+        Set<Speciality> specialities
 ) {
 }

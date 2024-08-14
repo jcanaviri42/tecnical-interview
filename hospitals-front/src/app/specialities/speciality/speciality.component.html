@@ -1,31 +1,32 @@
 <ul>
   @if (speciality) {
-    <li>
-      {{ speciality.id }}
-    </li>
-    <li>
-      {{ speciality.name }}
-    </li>
-    <li>
-      {{ speciality.description }}
-    </li>
-    <li>
-      <img [src]="speciality.gravatarUrl" alt="">
-    </li>
-    <li>
-      {{ speciality.createdAt }}
-    </li>
-    <li>
-      {{ speciality.updatedAt }}
-    </li>
-    <li>
-      {{ speciality.createdBy }}
-    </li>
-    <li>
-      {{ speciality.updatedBy }}
-    </li>
-  }
-  @else {
-    <p>Loading...</p>
+  <li>
+    {{ speciality.id }}
+  </li>
+
+  <form [formGroup]="specialityForm">
+    <input type="text" id="name" formControlName="name" />
+    <input type="text" id="description" formControlName="description" />
+
+    <button type="submit" (click)="onUpdate()">Save</button>
+  </form>
+
+  <li>
+    <img [src]="speciality.gravatarUrl" alt="" />
+  </li>
+  <li>
+    {{ speciality.createdAt }}
+  </li>
+  <li>
+    {{ speciality.updatedAt }}
+  </li>
+  <li>
+    {{ speciality.createdBy }}
+  </li>
+  <li>
+    {{ speciality.updatedBy }}
+  </li>
+  } @else {
+  <p>Loading...</p>
   }
 </ul>

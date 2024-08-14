@@ -6,6 +6,7 @@ public record PatientResponseDTO(
         Long id,
         String name,
         String lastName,
+        String address,
         LocalDate birthDate,
         String gravatarUrl,
         LocalDate createdAt,

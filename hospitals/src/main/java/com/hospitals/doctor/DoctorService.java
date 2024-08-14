@@ -79,18 +79,25 @@ public class DoctorService {
             Optional<Doctor> optionalDoctor = this.doctorRepository.findById(id);
             if (optionalDoctor.isEmpty()) return null;
 
-            Doctor Doctor = optionalDoctor.get();
+            Doctor doctor = optionalDoctor.get();
 
-            if (dto.name() != null) Doctor.setName(dto.name());
-            if (dto.lastName() != null) Doctor.setLastName(dto.lastName());
+            if (dto.name() != null) doctor.setName(dto.name());
+            if (dto.lastName() != null) doctor.setLastName(dto.lastName());
+            if (dto.hospitalId() != null) {
+                Optional<Hospital> optionalHospital = this.hospitalRepository.findById(dto.hospitalId());
+                if (optionalHospital.isPresent()) {
+                    Hospital hospital = optionalHospital.get();
+                    doctor.setHospital(hospital);
+                }
+            }
 
-            Doctor.setUpdatedAt(LocalDate.now());
+            doctor.setUpdatedAt(LocalDate.now());
             // TODO: Get the current user
-            Doctor.setUpdatedBy("user");
+            doctor.setUpdatedBy("user");
 
-            this.doctorRepository.save(Doctor);
+            this.doctorRepository.save(doctor);
 
-            return this.doctorMapper.toDoctorResponseDTO(Doctor);
+            return this.doctorMapper.toDoctorResponseDTO(doctor);
         } catch (Exception e) {
             System.out.println("e = " + e);
             throw new RuntimeException("Unexpected error saving doctor", e);
