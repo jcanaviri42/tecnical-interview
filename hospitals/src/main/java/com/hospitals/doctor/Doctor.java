@@ -34,6 +34,10 @@ public class Doctor {
     @Column(nullable = false)
     private String lastName;
 
+    private LocalDate birthDate;
+
+    private String address;
+
     @Transient
     private String gravatarUrl;
 
@@ -63,7 +67,7 @@ public class Doctor {
     public String getGravatarUrl() {
         if (this.gravatarUrl == null) {
             var hash = DigestUtils.md5Hex(this.name.toLowerCase().trim());
-            gravatarUrl = "https://www.gravatar.com/avatar/" + hash + "?s=80&d=identicon";
+            gravatarUrl = "https://www.gravatar.com/avatar/" + hash + "?s=80&d=mm";
         }
 
         return gravatarUrl;
