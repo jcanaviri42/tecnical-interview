@@ -1,0 +1,30 @@
+<ul>
+  @if (doctor) {
+  <li>
+    {{ doctor.id }}
+  </li>
+  <li>
+    {{ doctor.name }}
+  </li>
+  <li>
+    {{ doctor.lastName }}
+  </li>
+  <li>
+    <img [src]="doctor.gravatarUrl" alt="" />
+  </li>
+  <li>
+    {{ doctor.createdAt }}
+  </li>
+  <li>
+    {{ doctor.updatedAt }}
+  </li>
+  <li>
+    {{ doctor.createdBy }}
+  </li>
+  <li>
+    {{ doctor.updatedBy }}
+  </li>
+  } @else {
+  <p>Loading...</p>
+  }
+</ul>

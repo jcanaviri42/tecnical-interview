@@ -15,4 +15,9 @@ export class HospitalsService {
     const hospitalsUrl = `${this.BASE_URL}/hospitals`;
     return this.http.get<Hospital[]>(hospitalsUrl);
   }
+
+  getHospitalById(id: number): Observable<Hospital> {
+    const hospitalsUrl = `${this.BASE_URL}/hospitals/${id}`;
+    return this.http.get<Hospital>(hospitalsUrl);
+  }
 }

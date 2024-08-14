@@ -13,7 +13,11 @@ export class SpecialitiesService {
 
   getAllSpecialities(): Observable<Speciality[]> {
     const specialitiesUrl = `${this.BASE_URL}/specialities`;
-
     return this.http.get<Speciality[]>(specialitiesUrl);
+  }
+
+  getSpecialityById(id: number): Observable<Speciality> {
+    const specialitiesUrl = `${this.BASE_URL}/specialities/${id}`;
+    return this.http.get<Speciality>(specialitiesUrl);
   }
 }

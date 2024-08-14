@@ -1,1 +1,33 @@
-<p>Single hospital component with the id {{ hospitalId }}</p>
+<ul>
+  @if (hospital) {
+  <li>
+    {{ hospital.id }}
+  </li>
+  <li>
+    {{ hospital.name }}
+  </li>
+  <li>
+    {{ hospital.phone }}
+  </li>
+  <li>
+    {{ hospital.email }}
+  </li>
+  <li>
+    <img [src]="hospital.gravatarUrl" alt="" />
+  </li>
+  <li>
+    {{ hospital.createdAt }}
+  </li>
+  <li>
+    {{ hospital.updatedAt }}
+  </li>
+  <li>
+    {{ hospital.createdBy }}
+  </li>
+  <li>
+    {{ hospital.updatedBy }}
+  </li>
+  } @else {
+    <p>Loading...</p>
+  }
+</ul>

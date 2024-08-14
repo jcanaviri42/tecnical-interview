@@ -1,0 +1,31 @@
+<ul>
+  @if (speciality) {
+    <li>
+      {{ speciality.id }}
+    </li>
+    <li>
+      {{ speciality.name }}
+    </li>
+    <li>
+      {{ speciality.description }}
+    </li>
+    <li>
+      <img [src]="speciality.gravatarUrl" alt="">
+    </li>
+    <li>
+      {{ speciality.createdAt }}
+    </li>
+    <li>
+      {{ speciality.updatedAt }}
+    </li>
+    <li>
+      {{ speciality.createdBy }}
+    </li>
+    <li>
+      {{ speciality.updatedBy }}
+    </li>
+  }
+  @else {
+    <p>Loading...</p>
+  }
+</ul>

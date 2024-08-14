@@ -1,11 +1,12 @@
 <strong>List of doctors</strong>
 
-<ul>
+<ol>
   @for (doctor of doctors; track $index; let i = $index) {
-    <li>
-      {{ i + 1 }}: {{ doctor.name }} {{ doctor.lastName }}
-
+  <li>
+    <a [routerLink]="['/doctors/', doctor.id]">
+      {{ doctor.name }} {{ doctor.lastName }}
       <img [src]="doctor.gravatarUrl" alt="" />
-    </li>
+    </a>
+  </li>
   }
-</ul>
+</ol>

@@ -1,0 +1,12 @@
+<strong>Patients list</strong>
+
+<ol>
+  @for (patient of patients; track $index) {
+  <li>
+    <a [routerLink]="['/patients/', patient.id]">
+      {{ patient.name }} - {{ patient.lastName }} - {{ patient.birthDate }}
+      <img [src]="patient.gravatarUrl" [alt]="patient.name" />
+    </a>
+  </li>
+  }
+</ol>

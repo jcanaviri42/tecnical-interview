@@ -1,0 +1,11 @@
+<strong>List of specialities</strong>
+<ul>
+  @for (speciality of specialities; track $index) {
+  <li>
+    <a [routerLink]="['/specialities/', speciality.id]">
+      {{ speciality.name }} - {{ speciality.description }}
+      <img [src]="speciality.gravatarUrl" alt="" />
+    </a>
+  </li>
+  }
+</ul>

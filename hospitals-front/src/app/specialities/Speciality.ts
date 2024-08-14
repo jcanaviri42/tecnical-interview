@@ -1,7 +1,7 @@
 export interface Speciality {
   id?: number;
-  name?: number;
-  description?: number;
+  name?: string;
+  description?: string;
   gravatarUrl?: string;
   createdAt?: string;
   updatedAt?: string;

@@ -13,7 +13,11 @@ export class DoctorsService {
 
   getAllDoctors(): Observable<Doctor[]> {
     const doctorsUrl = `${this.BASE_URL}/doctors`;
-
     return this.http.get<Doctor[]>(doctorsUrl);
+  }
+
+  getDoctorById(id: number): Observable<Doctor> {
+    const doctorsUrl = `${this.BASE_URL}/doctors/${id}`;
+    return this.http.get<Doctor>(doctorsUrl);
   }
 }
