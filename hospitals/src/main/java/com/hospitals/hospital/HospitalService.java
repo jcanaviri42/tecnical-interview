@@ -1,5 +1,9 @@
 package com.hospitals.hospital;
 
+import com.hospitals.doctor.DoctorMapper;
+import com.hospitals.doctor.DoctorResponseDTO;
+import com.hospitals.patient.PatientMapper;
+import com.hospitals.patient.PatientResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,10 +16,19 @@ public class HospitalService {
 
     public final HospitalRepository hospitalRepository;
     public final HospitalMapper hospitalMapper;
+    public final DoctorMapper doctorMapper;
+    public final PatientMapper patientMapper;
 
-    public HospitalService(HospitalRepository hospitalRepository, HospitalMapper hospitalMapper) {
+    public HospitalService(
+            HospitalRepository hospitalRepository,
+            HospitalMapper hospitalMapper,
+            DoctorMapper doctorMapper,
+            PatientMapper patientMapper) {
+
         this.hospitalRepository = hospitalRepository;
         this.hospitalMapper = hospitalMapper;
+        this.doctorMapper = doctorMapper;
+        this.patientMapper = patientMapper;
     }
 
     public HospitalResponseDTO saveHospital(HospitalDTO dto) {
@@ -116,4 +129,35 @@ public class HospitalService {
             throw new RuntimeException("Unexpected error", e);
         }
     }
+
+    public List<DoctorResponseDTO> findAllDoctors(Long id) {
+        try {
+            Optional<Hospital> optionalHospital = this.hospitalRepository.findById(id);
+            if (optionalHospital.isEmpty()) return null;
+            Hospital hospital = optionalHospital.get();
+            return hospital.getDoctors()
+                    .stream()
+                    .map(this.doctorMapper::toDoctorResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
+    public List<PatientResponseDTO> findAllPatients(Long id) {
+        try {
+            Optional<Hospital> optionalHospital = this.hospitalRepository.findById(id);
+            if (optionalHospital.isEmpty()) return null;
+            Hospital hospital = optionalHospital.get();
+            return hospital.getPatients()
+                    .stream()
+                    .map(this.patientMapper::toPatientResponseDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
 }

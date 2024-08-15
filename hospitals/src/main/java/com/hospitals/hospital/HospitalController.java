@@ -1,5 +1,7 @@
 package com.hospitals.hospital;
 
+import com.hospitals.doctor.DoctorResponseDTO;
+import com.hospitals.patient.PatientResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -102,4 +104,33 @@ public class HospitalController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
+
+    @GetMapping("/{id}/doctors")
+    public ResponseEntity<?> findAllDoctors(@PathVariable Long id) {
+        try {
+            List<DoctorResponseDTO> allDoctors = this.hospitalService.findAllDoctors(id);
+            if (allDoctors == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Any doctor found.");
+
+            return ResponseEntity.status(HttpStatus.OK).body(allDoctors);
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}/patients")
+    public ResponseEntity<?> findAllPatients(@PathVariable Long id) {
+        try {
+            List<PatientResponseDTO> allPatients = this.hospitalService.findAllPatients(id);
+            if (allPatients == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Any doctor found.");
+
+            return ResponseEntity.status(HttpStatus.OK).body(allPatients);
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
 }
