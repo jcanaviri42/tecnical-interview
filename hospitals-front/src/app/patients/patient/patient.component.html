@@ -55,4 +55,14 @@
   } } @else {
   <p>Loading...</p>
   }
+
+  <strong>Register a new note</strong>
+  @if (patient) {
+  <app-note-create (reload)="onReload($event)" [patientId]="patientId" [hospitalId]="patient.hospitalId"/>
+  }
+
+  <strong>History of notes</strong>
+  @if (notes.length) {
+  <app-note-list [notes]="notes" />
+  }
 </ul>

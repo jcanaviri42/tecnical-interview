@@ -1,0 +1,5 @@
+<ul>
+  @for (note of notes; track $index) {
+  <li>{{ note.id }} - {{ note.noteDate }} - {{ note.description }}</li>
+  }
+</ul>

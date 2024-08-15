@@ -1,6 +1,7 @@
 package com.hospitals.patient;
 
 import com.hospitals.doctor.DoctorResponseDTO;
+import com.hospitals.note.NoteResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -121,6 +122,17 @@ public class PatientController {
         try {
             List<DoctorResponseDTO> allDoctors = this.patientService.findAllDoctors(id);
             return ResponseEntity.status(HttpStatus.OK).body(allDoctors);
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}/notes")
+    public ResponseEntity<?> getAllNotesByPatient(@PathVariable Long id) {
+        try {
+            List<NoteResponseDTO> allNotes = this.patientService.findAllNotes(id);
+            return ResponseEntity.status(HttpStatus.OK).body(allNotes);
         } catch (Exception e) {
             System.out.println("e = " + e);
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

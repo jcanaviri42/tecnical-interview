@@ -8,4 +8,5 @@ export interface Patient {
   updatedAt?: string;
   createdBy?: string;
   updatedBy?: string;
+  hospitalId: number;
 }

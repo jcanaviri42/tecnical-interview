@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Patient } from './Patient';
+import { Note } from '../notes/Note';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,9 @@ export class PatientsService {
 
   getAllDoctors(id: number): Observable<Patient[]> {
     return this.http.get<Patient[]>(`${this.BASE_URL}/patients/${id}/doctors`);
+  }
+
+  getAllNotes(id: number): Observable<Note[]> {
+    return this.http.get<Note[]>(`${this.BASE_URL}/patients/${id}/notes`);
   }
 }

@@ -1,0 +1,25 @@
+<form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="description">Description:</label>
+    <input type="text" id="description" formControlName="description" />
+  </div>
+  <div>
+    <label for="noteDate">Date:</label>
+    <input type="date" id="noteDate" formControlName="noteDate" />
+  </div>
+  <div>
+    <label for="doctorId">Doctor:</label>
+    <select formControlName="doctorId">
+      @for (doctor of doctors; track $index) {
+      <option [value]="doctor.id">
+        {{ doctor.name }} {{ doctor.lastName }}
+      </option>
+      }
+    </select>
+  </div>
+
+  @if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+  }
+  <button type="submit" [disabled]="noteForm.invalid">Create Speciality</button>
+</form>

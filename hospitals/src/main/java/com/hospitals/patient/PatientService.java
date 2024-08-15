@@ -4,6 +4,8 @@ import com.hospitals.doctor.DoctorMapper;
 import com.hospitals.doctor.DoctorResponseDTO;
 import com.hospitals.hospital.Hospital;
 import com.hospitals.hospital.HospitalRepository;
+import com.hospitals.note.NoteMapper;
+import com.hospitals.note.NoteResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,17 +18,20 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final HospitalRepository hospitalRepository;
+    private final NoteMapper noteMapper;
     private final PatientMapper patientMapper;
     private final DoctorMapper doctorMapper;
 
     public PatientService(
             PatientRepository patientRepository,
             HospitalRepository hospitalRepository,
+            NoteMapper noteMapper,
             PatientMapper patientMapper,
             DoctorMapper doctorMapper) {
 
         this.patientRepository = patientRepository;
         this.hospitalRepository = hospitalRepository;
+        this.noteMapper = noteMapper;
         this.patientMapper = patientMapper;
         this.doctorMapper = doctorMapper;
     }
@@ -113,18 +118,6 @@ public class PatientService {
         }
     }
 
-    public List<PatientResponseDTO> findAllPatientsByNameAndLastName(String name, String lastName) {
-        try {
-            return this.patientRepository.findAllByNameAndLastNameContainingIgnoreCase(name, lastName)
-                    .stream()
-                    .map(this.patientMapper::toPatientResponseDTO)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            System.out.println("e = " + e);
-            throw new RuntimeException("Unexpected error", e);
-        }
-    }
-
     public List<PatientResponseDTO> findAllPatientByName(String name) {
         try {
             return this.patientRepository.findAllByNameContainingIgnoreCase(name)
@@ -185,6 +178,22 @@ public class PatientService {
                     .distinct()
                     .collect(Collectors.toList());
 
+        } catch (Exception e) {
+            System.out.println("e = " + e);
+            throw new RuntimeException("Unexpected error deleting hospital", e);
+        }
+    }
+
+    public List<NoteResponseDTO> findAllNotes(Long id) {
+        try {
+            Optional<Patient> optionalPatient = this.patientRepository.findById(id);
+            if (optionalPatient.isEmpty()) return null;
+
+            Patient patient = optionalPatient.get();
+            return patient.getNotes()
+                    .stream()
+                    .map(this.noteMapper::toNoteResponseDTO)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             System.out.println("e = " + e);
             throw new RuntimeException("Unexpected error deleting hospital", e);
