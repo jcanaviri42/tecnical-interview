@@ -42,4 +42,10 @@ export class DoctorsService {
       `${this.BASE_URL}/doctors/search?startDate=${startDate}&endDate=${endDate}`
     );
   }
+
+  getAllPatients(id: number): Observable<Doctor[]> {
+    return this.http.get<Doctor[]>(
+      `${this.BASE_URL}/doctors/${id}/patients`
+    );
+  }
 }

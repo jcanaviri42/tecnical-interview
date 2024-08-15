@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Hospital } from '../../hospitals/Hospital';
 import { HospitalsService } from '../../hospitals/hospitals.service';
 import { Doctor } from '../Doctor';
 import { DoctorsService } from '../doctors.service';
+import { Patient } from '../../patients/Patient';
 
 @Component({
   selector: 'app-doctors',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.scss',
 })
@@ -22,6 +23,7 @@ export class DoctorComponent implements OnInit {
     hospitalId: new FormControl(),
   });
   hospitals!: Hospital[];
+  patients: Patient[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,10 @@ export class DoctorComponent implements OnInit {
         this.service.getDoctorById(this.doctorId).subscribe((result) => {
           this.doctor = result;
           this.doctorForm.patchValue(result);
+        });
+
+        this.service.getAllPatients(this.doctorId).subscribe((patients) => {
+          this.patients = patients;
         });
 
         this.hospitalService

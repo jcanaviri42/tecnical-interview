@@ -37,7 +37,22 @@
   <li>
     {{ patient.updatedBy }}
   </li>
+
+  <i>Doctor visited</i>
+  @if (doctors.length) {
+  <ol>
+    @for (doctor of doctors; track $index) {
+    <li>
+      <a [routerLink]="['/doctors/', doctor.id]">
+        {{ doctor.name }} - {{ doctor.lastName }}
+        <img [src]="doctor.gravatarUrl" [alt]="doctor.name" />
+      </a>
+    </li>
+    }
+  </ol>
   } @else {
+  <p>No doctors visited</p>
+  } } @else {
   <p>Loading...</p>
   }
 </ul>

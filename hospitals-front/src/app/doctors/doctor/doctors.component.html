@@ -5,16 +5,8 @@
   </li>
 
   <form [formGroup]="doctorForm">
-    <input
-      type="text"
-      id="name"
-      formControlName="name"
-    />
-    <input
-      type="text"
-      id="lastName"
-      formControlName="lastName"
-    />
+    <input type="text" id="name" formControlName="name" />
+    <input type="text" id="lastName" formControlName="lastName" />
 
     Select the hospital
     <select formControlName="hospitalId">
@@ -40,7 +32,22 @@
   <li>
     {{ doctor.updatedBy }}
   </li>
+
+  <i>Patients attended</i>
+  @if (patients.length) {
+  <ol>
+    @for (patient of patients; track $index) {
+    <li>
+      <a [routerLink]="['/patients/', patient.id]">
+        {{ patient.name }} - {{ patient.lastName }} - {{ patient.birthDate }}
+        <img [src]="patient.gravatarUrl" [alt]="patient.name" />
+      </a>
+    </li>
+    }
+  </ol>
   } @else {
+  <p>No patients attended</p>
+  } } @else {
   <p>Loading...</p>
   }
 </ul>
