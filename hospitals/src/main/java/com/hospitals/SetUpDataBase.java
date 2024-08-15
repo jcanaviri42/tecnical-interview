@@ -126,6 +126,11 @@ public class SetUpDataBase implements CommandLineRunner {
             Optional<Hospital> hospital = this.hospitalRepository.findById(random.nextLong(5));
             if (hospital.isEmpty()) continue;
 
+            Optional<Speciality> speciality = this.specialityRepository.findById(random.nextLong(5));
+            if (speciality.isEmpty()) continue;
+            Set<Speciality> specialities = new HashSet<>();
+            specialities.add(speciality.get());
+
             Doctor doctor = Doctor.builder()
                     .name(randomName)
                     .lastName(randomLastName)
@@ -133,6 +138,7 @@ public class SetUpDataBase implements CommandLineRunner {
                     .createdAt(LocalDate.now())
                     .createdBy("system")
                     .hospital(hospital.get())
+                    .specialities(specialities)
                     .build();
             doctors.add(doctor);
         }

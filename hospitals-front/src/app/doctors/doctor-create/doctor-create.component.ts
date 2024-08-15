@@ -67,7 +67,7 @@ export class DoctorCreateComponent implements OnInit {
 
     if (this.doctorForm.valid) {
       const newDoctor: Doctor | any = this.doctorForm.value;
-      newDoctor.specialitiesIds = selectedSpecialities;
+      newDoctor.specialitiesIds = selectedSpecialities?.filter(speciality => speciality != null);
       this.service.createDoctor(newDoctor).subscribe({
         next: () => {
           this.router.navigate(['/doctors']);

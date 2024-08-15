@@ -4,11 +4,12 @@ import com.hospitals.hospital.Hospital;
 import com.hospitals.hospital.HospitalRepository;
 import com.hospitals.patient.PatientMapper;
 import com.hospitals.patient.PatientResponseDTO;
+import com.hospitals.speciality.Speciality;
+import com.hospitals.speciality.SpecialityRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,17 +17,20 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final HospitalRepository hospitalRepository;
+    private final SpecialityRepository specialityRepository;
     private final DoctorMapper doctorMapper;
     private final PatientMapper patientMapper;
 
     public DoctorService(
             DoctorRepository doctorRepository,
             HospitalRepository hospitalRepository,
+            SpecialityRepository specialityRepository,
             DoctorMapper doctorMapper,
             PatientMapper patientMapper) {
 
         this.doctorRepository = doctorRepository;
         this.hospitalRepository = hospitalRepository;
+        this.specialityRepository = specialityRepository;
         this.doctorMapper = doctorMapper;
         this.patientMapper = patientMapper;
     }
@@ -40,6 +44,12 @@ public class DoctorService {
         if (hospital.isEmpty())
             return null;
 
+        Set<Speciality> specialities = new HashSet<>();
+        for (Long id : dto.specialitiesIds()) {
+            Optional<Speciality> byId = this.specialityRepository.findById(id);
+            byId.ifPresent(specialities::add);
+        }
+
         try {
             Doctor doctor = Doctor.builder()
                     .name(dto.name())
@@ -48,6 +58,7 @@ public class DoctorService {
                     .createdAt(LocalDate.now())
                     .createdBy("user")
                     .hospital(hospital.get())
+                    .specialities(specialities)
                     .build();
 
             this.doctorRepository.save(doctor);
