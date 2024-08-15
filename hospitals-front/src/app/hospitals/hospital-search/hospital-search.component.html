@@ -1,17 +1,54 @@
-<input type="search" [(ngModel)]="searchQuery" (keyup.enter)="search()" />
-<button (click)="search()">Search</button>
+<div class="d-flex">
+  <input
+    type="search"
+    class="form-control me-2"
+    [(ngModel)]="searchQuery"
+    (keyup.enter)="search()"
+    placeholder="Search Hospitals"
+  />
+  <button type="button" class="btn btn-primary me-2" (click)="search()">Search</button>
+  <input
+    type="date"
+    class="form-control me-2"
+    [formControl]="startDateControl"
+  />
+  <input type="date" class="form-control" [formControl]="endDateControl" />
+  <button type="button" class="btn btn-secondary" (click)="searchByDates()">Search</button>
+</div>
 
-<input type="date" [formControl]="startDateControl" />
-<input type="date" [formControl]="endDateControl" />
-<button (click)="searchByDates()">Search</button>
-
-<ul>
+<ol class="list-group mt-4">
   @for (hospital of hospitals; track $index) {
-  <li>
-    <a [routerLink]="['hospitals/', hospital.id]">
-      {{ hospital.name }}
-      {{ hospital.phone }}<img [src]="hospital.gravatarUrl" alt="" srcset="" />
-    </a>
+  <li class="list-group-item d-flex">
+    <img
+      [src]="hospital.gravatarUrl"
+      alt="{{ hospital.name }}"
+      class="img-fluid rounded-start"
+      style="width: 100px; height: 100px; object-fit: cover"
+    />
+    <div>
+      <a
+        class="link-unstyled link-underline-none"
+        [routerLink]="['hospitals/', hospital.id]"
+      >
+        <div class="d-flex">
+          <h5 class="mx-4 text-muted link-unstyled">{{ hospital.name }}</h5>
+          <ul class="list-unstyled mb-0">
+            <li class="text-muted">
+              <span>Phone: </span>{{ hospital.phone }}
+            </li>
+            <li class="text-muted">
+              <span>Email: </span>{{ hospital.email }}
+            </li>
+            <li class="text-muted">
+              <span>Created At: </span>{{ hospital.createdAt }}
+            </li>
+            <li class="text-muted">
+              <span>Created By: </span>{{ hospital.createdBy }}
+            </li>
+          </ul>
+        </div>
+      </a>
+    </div>
   </li>
   }
-</ul>
+</ol>

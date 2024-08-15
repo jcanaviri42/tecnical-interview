@@ -1,16 +1,52 @@
-<strong>Hospital List</strong>
-<app-hospital-search (hide)="onHideList($event)" />
-@if (!hide) {
-<ol>
-  @for (hospital of hospitals; track hospital) {
-  <li>
-    <a [routerLink]="['hospitals/', hospital.id]">
-      {{ hospital.name }}
-      {{ hospital.phone }}<img [src]="hospital.gravatarUrl" alt="" srcset="" />
-    </a>
-  </li>
-  }
-</ol>
+<div class="container">
+  <h2>Hospital List</h2>
+  <app-hospital-search (hide)="onHideList($event)" />
 
-<a [routerLink]="['/hospital-create']">Create hospital</a>
-}
+  <div class="d-flex align-items-center my-4">
+    <span class="mx-4">Do you want to create a new one?</span>
+    <a [routerLink]="['/hospital-create']" class="btn btn-primary">
+      Create hospital
+    </a>
+  </div>
+
+  @if (!hide) {
+  <ol class="list-group my-4">
+    @for (hospital of hospitals; track $index) {
+    <li class="list-group-item d-flex">
+      <img
+        [src]="hospital.gravatarUrl"
+        alt="{{ hospital.name }}"
+        class="img-fluid rounded-start"
+        style="width: 100px; height: 100px; object-fit: cover"
+      />
+      <div>
+        <a
+          class="link-unstyled link-underline-none"
+          [routerLink]="['hospitals/', hospital.id]"
+        >
+          <div class="d-flex">
+            <h5 class="mx-4 text-muted link-unstyled">{{ hospital.name }}</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="text-muted">
+                <span>Phone: </span>{{ hospital.phone }}
+              </li>
+              <li class="text-muted">
+                <span>Email: </span>{{ hospital.email }}
+              </li>
+              <li class="text-muted">
+                <span>Created At: </span>{{ hospital.createdAt }}
+              </li>
+              <li class="text-muted">
+                <span>Created By: </span>{{ hospital.createdBy }}
+              </li>
+            </ul>
+          </div>
+        </a>
+      </div>
+    </li>
+    }
+  </ol>
+  }
+</div>
+
+<hr>

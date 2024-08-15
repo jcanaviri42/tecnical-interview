@@ -1,16 +1,45 @@
-<form [formGroup]="specialityForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" formControlName="name" />
+<form
+  [formGroup]="specialityForm"
+  (ngSubmit)="onSubmit()"
+  class="needs-validation"
+>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name:</label>
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="form-control"
+      required
+    />
+    @if (specialityForm.get('name')?.invalid &&
+    (specialityForm.get('name')?.dirty || specialityForm.get('name')?.touched))
+    {
+    <div class="invalid-feedback">Please enter a name.</div>
+    }
   </div>
-  <div>
-    <label for="description">Description:</label>
-    <input type="text" id="description" formControlName="description" />
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Description:</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      class="form-control"
+      rows="3"
+    ></textarea>
   </div>
+
   @if (errorMessage) {
-    <p>{{ errorMessage }}</p>
+  <div class="mb-3">
+    <p class="text-danger">{{ errorMessage }}</p>
+  </div>
   }
-  <button type="submit" [disabled]="specialityForm.invalid">
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="specialityForm.invalid"
+  >
     Create Speciality
   </button>
 </form>

@@ -1,17 +1,36 @@
-<strong>List of doctors</strong>
-<app-doctor-search (hide)="onHideList($event)" />
+<div class="container mt-3">
+  <h2>List of Doctors</h2>
+  <app-doctor-search (hide)="onHideList($event)" />
 
-@if (!hide) {
-<ol>
-  @for (doctor of doctors; track $index; let i = $index) {
-  <li>
-    <a [routerLink]="['/doctors/', doctor.id]">
-      {{ doctor.name }} {{ doctor.lastName }}
-      <img [src]="doctor.gravatarUrl" alt="" />
+  <div class="d-flex align-items-center my-4">
+    <span class="mx-4">Do you want to create a new one?</span>
+    <a [routerLink]="['/doctor-create']" class="btn btn-primary">
+      Create doctor
     </a>
-  </li>
-  }
-</ol>
-}
+  </div>
+  @if (!hide) {
 
-<a [routerLink]="['/doctor-create']">Create doctor</a>
+  <ol class="list-group">
+    @for (doctor of doctors; track $index) {
+
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <img
+          [src]="doctor.gravatarUrl"
+          alt="{{ doctor.name }} {{ doctor.lastName }}"
+          class="img-fluid rounded-start ms-auto"
+          style="width: 100px; height: 100px; object-fit: cover"
+        />
+        <a [routerLink]="['/doctors/', doctor.id]">
+          Dr(a). {{ doctor.name }} {{ doctor.lastName }}
+        </a>
+      </div>
+    </li>
+    }
+  </ol>
+  }
+</div>
+
+<hr>

@@ -1,16 +1,35 @@
-<strong>Patients list</strong>
+<div class="container mt-3">
+  <h2>Patients List</h2>
+  <app-patient-search (hide)="onHideList($event)" />
 
-<app-patient-search (hide)="onHideList($event)" />
-@if (!hide) {
-<ol>
-  @for (patient of patients; track $index) {
-  <li>
-    <a [routerLink]="['/patients/', patient.id]">
-      {{ patient.name }} - {{ patient.lastName }} - {{ patient.birthDate }}
-      <img [src]="patient.gravatarUrl" [alt]="patient.name" />
+  <div class="d-flex align-items-center my-4">
+    <span class="mx-4">Do you want to create a new one?</span>
+    <a [routerLink]="['/patient-create']" class="btn btn-primary">
+      Create patient
     </a>
-  </li>
+  </div>
+
+  @if (!hide) {
+
+  <ol class="list-group">
+    @for (patient of patients; track $index) {
+
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <img
+          [src]="patient.gravatarUrl"
+          alt="{{ patient.name }}"
+          class="img-fluid rounded-start ms-auto"
+          style="width: 100px; height: 100px; object-fit: cover"
+        />
+        <a [routerLink]="['/patients/', patient.id]">
+          {{ patient.name }} {{ patient.lastName }}
+        </a>
+      </div>
+    </li>
+    }
+  </ol>
   }
-</ol>
-}
-<a [routerLink]="['/patient-create']">Create patient</a>
+</div>

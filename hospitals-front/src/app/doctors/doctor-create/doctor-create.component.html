@@ -1,21 +1,60 @@
-<form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" formControlName="name" />
-  </div>
-  <div>
-    <label for="name">Last Name:</label>
-    <input type="text" id="lastName" formControlName="lastName" />
-  </div>
-  <div formArrayName="specialitiesIds">
-    @for (speciality of specialities; track $index; let i = $index) {
-    {{ speciality.name }} <input type="checkbox" [formControlName]="i" />
-    <br />
+<h3>Create Doctor</h3>
+
+<form [formGroup]="doctorForm" (ngSubmit)="onSubmit()" class="needs-validation">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name:</label>
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="form-control"
+      required
+    />
+    @if (doctorForm.get('name')?.invalid && (doctorForm.get('name')?.dirty ||
+    doctorForm.get('name')?.touched)) {
+
+    <div class="invalid-feedback">Please enter a name.</div>
     }
   </div>
-  <div>
-    <label for="hospitalId">Hospital:</label>
-    <select formControlName="hospitalId">
+
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name:</label>
+    <input
+      type="text"
+      id="lastName"
+      formControlName="lastName"
+      class="form-control"
+      required
+    />
+    @if (doctorForm.get('lastName')?.invalid &&
+    (doctorForm.get('lastName')?.dirty || doctorForm.get('lastName')?.touched))
+    {
+    <div class="invalid-feedback">Please enter a last name.</div>
+    }
+  </div>
+
+  <div class="mb-3" formArrayName="specialitiesIds">
+    <label for="specialitiesIds">Specialties:</label>
+    @for (speciality of specialities; track $index; let i = $index) {
+    <div class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="{{ speciality.id }}"
+        formControlName="{{ i }}"
+        [value]="speciality.id"
+      />
+      <label class="form-check-label" for="{{ speciality.id }}">
+        {{ speciality.name }}
+      </label>
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="hospitalId" class="form-label">Hospital:</label>
+    <select id="hospitalId" formControlName="hospitalId" class="form-select">
+      <option value="">Select Hospital</option>
       @for (hospital of hospitals; track $index) {
       <option [value]="hospital.id">
         {{ hospital.name }}
@@ -23,8 +62,12 @@
       }
     </select>
   </div>
+
   @if (errorMessage) {
-    <p>{{ errorMessage }}</p>
+  <div class="mb-3">
+    <p class="text-danger">{{ errorMessage }}</p>
+  </div>
   }
-  <button type="submit" [disabled]="doctorForm.invalid">Create Doctor</button>
+
+  <button type="submit" class="btn btn-primary">Create Doctor</button>
 </form>

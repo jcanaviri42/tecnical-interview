@@ -1,13 +1,31 @@
-<strong>List of specialities</strong>
-<ul>
-  @for (speciality of specialities; track $index) {
-  <li>
-    <a [routerLink]="['/specialities/', speciality.id]">
-      {{ speciality.name }} - {{ speciality.description }}
-      <img [src]="speciality.gravatarUrl" alt="" />
-    </a>
-  </li>
-  }
-</ul>
+<div class="container mt-3">
+  <h2>List of specialities</h2>
 
-<a [routerLink]="['/speciality-create']">Create speciality</a>
+  <div class="d-flex align-items-center my-4">
+    <span class="mx-4">Do you want to create a new speciality?</span>
+    <a [routerLink]="['/speciality-create']" class="btn btn-primary">
+      Create Speciality
+    </a>
+  </div>
+
+  <ol class="list-group">
+    @for (speciality of specialities; track $index) {
+
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <a [routerLink]="['/specialities/', speciality.id]">
+          <img
+            [src]="speciality.gravatarUrl"
+            alt="{{ speciality.name }}"
+            class="img-fluid rounded-start ms-auto"
+            style="width: 100px; height: 100px; object-fit: cover"
+          />
+          {{ speciality.name }} / {{ speciality.description }}
+        </a>
+      </div>
+    </li>
+    }
+  </ol>
+</div>
