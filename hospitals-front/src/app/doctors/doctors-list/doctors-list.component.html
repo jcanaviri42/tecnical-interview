@@ -1,5 +1,7 @@
 <strong>List of doctors</strong>
+<app-doctor-search (hide)="onHideList($event)" />
 
+@if (!hide) {
 <ol>
   @for (doctor of doctors; track $index; let i = $index) {
   <li>
@@ -10,5 +12,6 @@
   </li>
   }
 </ol>
+}
 
 <a [routerLink]="['/doctor-create']">Create doctor</a>

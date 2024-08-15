@@ -10,6 +10,7 @@ public class DoctorMapper {
                 doctor.getId(),
                 doctor.getName(),
                 doctor.getLastName(),
+                doctor.getBirthDate(),
                 doctor.getGravatarUrl(),
                 doctor.getCreatedAt(),
                 doctor.getUpdatedAt(),

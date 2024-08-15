@@ -9,6 +9,7 @@ public record DoctorResponseDTO(
         Long id,
         String name,
         String lastName,
+        LocalDate birthDate,
         String gravatarUrl,
         LocalDate createdAt,
         LocalDate updatedAt,

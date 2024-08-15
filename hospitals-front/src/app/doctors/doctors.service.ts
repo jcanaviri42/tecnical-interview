@@ -32,4 +32,14 @@ export class DoctorsService {
 
     return this.http.post<Doctor>(doctorsUrl, doctor);
   }
+
+  searchDoctor(name: string): Observable<Doctor[]> {
+    return this.http.get<Doctor[]>(`${this.BASE_URL}/doctors/search?name=${name}`);
+  }
+
+  searchByDates(startDate: string, endDate: string): Observable<Doctor[]> {
+    return this.http.get<Doctor[]>(
+      `${this.BASE_URL}/doctors/search?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
 }

@@ -83,23 +83,18 @@ public class PatientController {
     @GetMapping("/search")
     public ResponseEntity<?> searchByName(
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "lastName", required = false) String lastName,
             @RequestParam(value = "startDate", required = false) LocalDate startDate,
             @RequestParam(value = "endDate", required = false) LocalDate endDate
     ) {
 
         try {
-            if (name != null && lastName != null) {
-                List<PatientResponseDTO> doctors = this.patientService.findAllPatientsByNameAndLastName(name, lastName);
-                return ResponseEntity.status(HttpStatus.OK).body(doctors);
-            }
             if (name != null) {
-                List<PatientResponseDTO> doctors = this.patientService.findAllPatientByName(name);
-                return ResponseEntity.status(HttpStatus.OK).body(doctors);
-            }
-            if (lastName != null) {
-                List<PatientResponseDTO> doctors = this.patientService.findAllPatientByLastName(lastName);
-                return ResponseEntity.status(HttpStatus.OK).body(doctors);
+                List<PatientResponseDTO> patientByName = this.patientService.findAllPatientByName(name);
+                if (!patientByName.isEmpty())
+                    return ResponseEntity.status(HttpStatus.OK).body(patientByName);
+
+                List<PatientResponseDTO> patientByLastName = this.patientService.findAllPatientByLastName(name);
+                return ResponseEntity.status(HttpStatus.OK).body(patientByLastName);
             }
             if (startDate != null && endDate != null) {
 
@@ -112,7 +107,6 @@ public class PatientController {
                         .findAllByBirthDateBetween(startDate, endDate);
                 if (!doctorsByBirthDate.isEmpty())
                     return ResponseEntity.status(HttpStatus.OK).body(doctorsByBirthDate);
-
             }
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Any patient found.");

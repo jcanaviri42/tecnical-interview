@@ -1,0 +1,17 @@
+<input type="search" [(ngModel)]="searchQuery" (keyup.enter)="search()" />
+<button (click)="search()">Search</button>
+
+<input type="date" [formControl]="startDateControl" />
+<input type="date" [formControl]="endDateControl" />
+<button (click)="searchByDates()">Search</button>
+
+<ul>
+  @for (doctor of doctors; track $index) {
+  <li>
+    <a [routerLink]="['doctors/', doctor.id]">
+      {{ doctor.name }} {{ doctor.lastName }}
+      <img [src]="doctor.gravatarUrl" alt="" />
+    </a>
+  </li>
+  }
+</ul>

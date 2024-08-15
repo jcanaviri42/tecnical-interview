@@ -1,5 +1,7 @@
 <strong>Patients list</strong>
 
+<app-patient-search (hide)="onHideList($event)" />
+@if (!hide) {
 <ol>
   @for (patient of patients; track $index) {
   <li>
@@ -10,5 +12,5 @@
   </li>
   }
 </ol>
-
+}
 <a [routerLink]="['/patient-create']">Create patient</a>

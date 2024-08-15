@@ -83,27 +83,21 @@ public class DoctorController {
     @GetMapping("/search")
     public ResponseEntity<?> searchByName(
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "lastName", required = false) String lastName,
             @RequestParam(value = "startDate", required = false) LocalDate startDate,
             @RequestParam(value = "endDate", required = false) LocalDate endDate
     ) {
 
         try {
-            if (name != null && lastName != null) {
-                List<DoctorResponseDTO> doctors = this.doctorService.findAllDoctorsByNameAndLastName(name, lastName);
-                return ResponseEntity.status(HttpStatus.OK).body(doctors);
-            }
             if (name != null) {
-                List<DoctorResponseDTO> doctors = this.doctorService.findAllDoctorsByName(name);
-                return ResponseEntity.status(HttpStatus.OK).body(doctors);
-            }
-            if (lastName != null) {
-                List<DoctorResponseDTO> doctors = this.doctorService.findAllDoctorsByLastName(lastName);
-                return ResponseEntity.status(HttpStatus.OK).body(doctors);
-            }
+                List<DoctorResponseDTO> doctorsByName = this.doctorService.findAllDoctorsByName(name);
+                if (!doctorsByName.isEmpty())
+                    return ResponseEntity.status(HttpStatus.OK).body(doctorsByName);
 
+                List<DoctorResponseDTO> doctorsByLastName = this.doctorService.findAllDoctorsByLastName(name);
+                return ResponseEntity.status(HttpStatus.OK).body(doctorsByLastName);
+            }
             if (startDate != null && endDate != null) {
-                List<DoctorResponseDTO> doctors = this.doctorService.findAllByCreatedAtBetween(startDate, endDate);
+                List<DoctorResponseDTO> doctors = this.doctorService.findAllByBirthDateBetween(startDate, endDate);
                 return ResponseEntity.status(HttpStatus.OK).body(doctors);
             }
 

@@ -1,4 +1,6 @@
 <strong>Hospital List</strong>
+<app-hospital-search (hide)="onHideList($event)" />
+@if (!hide) {
 <ol>
   @for (hospital of hospitals; track hospital) {
   <li>
@@ -11,3 +13,4 @@
 </ol>
 
 <a [routerLink]="['/hospital-create']">Create hospital</a>
+}

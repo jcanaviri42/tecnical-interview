@@ -44,6 +44,7 @@ public class DoctorService {
             Doctor doctor = Doctor.builder()
                     .name(dto.name())
                     .lastName(dto.lastName())
+                    .birthDate(dto.birthDate())
                     .createdAt(LocalDate.now())
                     .createdBy("user")
                     .hospital(hospital.get())
@@ -152,9 +153,9 @@ public class DoctorService {
         }
     }
 
-    public List<DoctorResponseDTO> findAllByCreatedAtBetween(LocalDate startDate, LocalDate endDate) {
+    public List<DoctorResponseDTO> findAllByBirthDateBetween(LocalDate startDate, LocalDate endDate) {
         try {
-            return this.doctorRepository.findAllByCreatedAtBetween(startDate, endDate)
+            return this.doctorRepository.findAllByBirthDateBetween(startDate, endDate)
                     .stream()
                     .map(this.doctorMapper::toDoctorResponseDTO)
                     .collect(Collectors.toList());

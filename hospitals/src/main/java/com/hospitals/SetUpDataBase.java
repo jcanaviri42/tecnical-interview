@@ -129,6 +129,7 @@ public class SetUpDataBase implements CommandLineRunner {
             Doctor doctor = Doctor.builder()
                     .name(randomName)
                     .lastName(randomLastName)
+                    .birthDate(getRandomLocalDate())
                     .createdAt(LocalDate.now())
                     .createdBy("system")
                     .hospital(hospital.get())
@@ -185,7 +186,7 @@ public class SetUpDataBase implements CommandLineRunner {
     private LocalDate getRandomLocalDate() {
         var random = new Random();
 
-        int year = random.nextInt(1990, 2000);
+        int year = random.nextInt(1990, 2010);
         int month = random.nextInt(1, 13);
         int dayOfMonth = random.nextInt(1, 28);
         return LocalDate.of(year, month, dayOfMonth);

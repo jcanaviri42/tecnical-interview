@@ -17,6 +17,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     List<Doctor> findAllByLastNameContainingIgnoreCase(String name);
 
-    List<Doctor> findAllByCreatedAtBetween(LocalDate startDate, LocalDate endDate);
+    List<Doctor> findAllByBirthDateBetween(LocalDate startDate, LocalDate endDate);
 
 }

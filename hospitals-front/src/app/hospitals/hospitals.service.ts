@@ -30,4 +30,16 @@ export class HospitalsService {
     const hospitalsUrl = `${this.BASE_URL}/hospitals`;
     return this.http.post<Hospital>(hospitalsUrl, hospital);
   }
+
+  searchHospitals(query: string): Observable<Hospital[]> {
+    return this.http.get<Hospital[]>(
+      `${this.BASE_URL}/hospitals/search?q=${query}`
+    );
+  }
+
+  searchByDates(startDate: string, endDate: string): Observable<Hospital[]> {
+    return this.http.get<Hospital[]>(
+      `${this.BASE_URL}/hospitals/search?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
 }
