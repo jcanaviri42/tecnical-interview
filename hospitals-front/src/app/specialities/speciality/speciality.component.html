@@ -1,32 +1,49 @@
-<ul>
-  @if (speciality) {
-  <li>
-    {{ speciality.id }}
-  </li>
+@if (speciality) {
 
-  <form [formGroup]="specialityForm">
-    <input type="text" id="name" formControlName="name" />
-    <input type="text" id="description" formControlName="description" />
+<div class="d-flex my-4">
+  <div class="col-md-4">
+    <img
+      [src]="speciality.gravatarUrl"
+      alt=""
+      class="img-fluid rounded-start ms-auto"
+      style="width: 250px; height: 250px; object-fit: cover"
+    />
+  </div>
+  <div class="col-md-8">
+    <p><b>Created At:</b> {{ speciality.createdAt }}</p>
+    <p><b>Updated At:</b> {{ speciality.updatedAt }}</p>
+    <p><b>Created By:</b> {{ speciality.createdBy }}</p>
+    <p><b>Updated By:</b> {{ speciality.updatedBy }}</p>
+  </div>
+</div>
 
-    <button type="submit" (click)="onUpdate()">Save</button>
-  </form>
+<form [formGroup]="specialityForm">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name:</label>
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="form-control"
+      required
+    />
+  </div>
 
-  <li>
-    <img [src]="speciality.gravatarUrl" alt="" />
-  </li>
-  <li>
-    {{ speciality.createdAt }}
-  </li>
-  <li>
-    {{ speciality.updatedAt }}
-  </li>
-  <li>
-    {{ speciality.createdBy }}
-  </li>
-  <li>
-    {{ speciality.updatedBy }}
-  </li>
-  } @else {
-  <p>Loading...</p>
-  }
-</ul>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description:</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      class="form-control"
+      rows="3"
+    ></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary mb-3" (click)="onUpdate()">
+    Save
+  </button>
+</form>
+
+} @else {
+<p>Loading...</p>
+}

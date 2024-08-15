@@ -1,53 +1,78 @@
-<ul>
-  @if (doctor) {
-  <li>
-    {{ doctor.id }}
-  </li>
+@if (doctor) {
+<div class="d-flex my-4">
+  <div class="col-md-4">
+    <img
+      [src]="doctor.gravatarUrl"
+      alt=""
+      class="img-fluid rounded mx-auto mb-3"
+      style="width: 250px; height: 250px; object-fit: cover"
+    />
+  </div>
+  <div class="col-md-8">
+    <p><strong>Created At:</strong> {{ doctor.createdAt }}</p>
+    <p><strong>Updated At:</strong> {{ doctor.updatedAt }}</p>
+    <p><strong>Created By:</strong> {{ doctor.createdBy }}</p>
+    <p><strong>Updated By:</strong> {{ doctor.updatedBy }}</p>
+  </div>
+</div>
 
-  <form [formGroup]="doctorForm">
-    <input type="text" id="name" formControlName="name" />
-    <input type="text" id="lastName" formControlName="lastName" />
+<form [formGroup]="doctorForm">
+  <div class="mb-3">
+    <input type="text" id="name" formControlName="name" class="form-control" />
+  </div>
 
-    Select the hospital
-    <select formControlName="hospitalId">
-      @for (h of hospitals; track $index) {
-      <option [value]="h.id">{{ h.name }}</option>
+  <div class="mb-3">
+    <input
+      type="text"
+      id="lastName"
+      formControlName="lastName"
+      class="form-control"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="hospitalId">Select Hospital:</label>
+    <select formControlName="hospitalId" class="form-select">
+      <option value="">Select Hospital</option>
+      @for (hospital of hospitals; track $index) {
+      <option [value]="hospital.id">
+        {{ hospital.name }}
+      </option>
       }
     </select>
+  </div>
 
-    <button type="submit" (click)="onUpdate()">Save</button>
-  </form>
-  <li>
-    <img [src]="doctor.gravatarUrl" alt="" />
-  </li>
-  <li>
-    {{ doctor.createdAt }}
-  </li>
-  <li>
-    {{ doctor.updatedAt }}
-  </li>
-  <li>
-    {{ doctor.createdBy }}
-  </li>
-  <li>
-    {{ doctor.updatedBy }}
-  </li>
+  <button type="submit" class="btn btn-primary mb-3" (click)="onUpdate()">
+    Update
+  </button>
+</form>
 
+<li class="list-group-item">
   <i>Patients attended</i>
   @if (patients.length) {
-  <ol>
+  <ol class="list-group mt-3">
     @for (patient of patients; track $index) {
-    <li>
+
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
       <a [routerLink]="['/patients/', patient.id]">
         {{ patient.name }} - {{ patient.lastName }} - {{ patient.birthDate }}
-        <img [src]="patient.gravatarUrl" [alt]="patient.name" />
       </a>
+      <img
+        [src]="patient.gravatarUrl"
+        alt="{{ patient.name }}"
+        class="img-fluid rounded-start ms-auto"
+        style="width: 100px; height: 100px; object-fit: cover"
+      />
     </li>
     }
   </ol>
   } @else {
   <p>No patients attended</p>
-  } } @else {
-  <p>Loading...</p>
   }
-</ul>
+</li>
+} @else {
+<p>Loading...</p>
+}
+<hr />

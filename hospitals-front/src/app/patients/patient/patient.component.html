@@ -1,68 +1,113 @@
-<ul>
-  @if (patient) {
-  <li>
-    {{ patient.id }}
-  </li>
+@if (patient) {
+<div class="d-flex my-4">
+  <div class="col-md-4">
+    <img
+      [src]="patient.gravatarUrl"
+      alt=""
+      class="img-fluid rounded mx-auto mb-3"
+      style="width: 250px; height: 250px; object-fit: cover"
+    />
+  </div>
+  <div class="col-md-8">
+    <p><strong>Created At:</strong> {{ patient.createdAt }}</p>
+    <p><strong>Updated At:</strong> {{ patient.updatedAt }}</p>
+    <p><strong>Created By:</strong> {{ patient.createdBy }}</p>
+    <p><strong>Updated By:</strong> {{ patient.updatedBy }}</p>
+  </div>
+</div>
 
+<li class="list-group-item">
   <form [formGroup]="patientForm">
-    <input type="text" id="name" formControlName="name" />
-    <input type="text" id="lastName" formControlName="lastName" />
-    <input type="text" id="address" formControlName="address" />
-    <input type="date" id="birthDate" formControlName="birthDate" />
+    <div class="mb-3">
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="form-control"
+        required
+      />
+    </div>
 
-    <button type="submit" (click)="onUpdate()">Save</button>
+    <div class="mb-3">
+      <input
+        type="text"
+        id="lastName"
+        formControlName="lastName"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <input
+        type="text"
+        id="address"
+        formControlName="address"
+        class="form-control"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="birthDate">Birth Date:</label>
+      <input
+        type="date"
+        id="birthDate"
+        formControlName="birthDate"
+        class="form-control"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-3" (click)="onUpdate()">
+      Update
+    </button>
   </form>
+</li>
 
-  <li>
-    {{ patient.name }}
-  </li>
-  <li>
-    {{ patient.lastName }}
-  </li>
-  <li>
-    {{ patient.birthDate }}
-  </li>
-  <li>
-    <img [src]="patient.gravatarUrl" alt="" />
-  </li>
-  <li>
-    {{ patient.createdAt }}
-  </li>
-  <li>
-    {{ patient.updatedAt }}
-  </li>
-  <li>
-    {{ patient.createdBy }}
-  </li>
-  <li>
-    {{ patient.updatedBy }}
-  </li>
-
+<li class="list-group-item">
   <i>Doctor visited</i>
   @if (doctors.length) {
-  <ol>
+  <ol class="list-group mt-3">
     @for (doctor of doctors; track $index) {
-    <li>
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
       <a [routerLink]="['/doctors/', doctor.id]">
         {{ doctor.name }} - {{ doctor.lastName }}
-        <img [src]="doctor.gravatarUrl" [alt]="doctor.name" />
+        <img
+          [src]="doctor.gravatarUrl"
+          alt="{{ doctor.name }}"
+          class="img-fluid rounded-start ms-auto"
+          style="width: 100px; height: 100px; object-fit: cover"
+        />
       </a>
     </li>
     }
   </ol>
   } @else {
-  <p>No doctors visited</p>
-  } } @else {
-  <p>Loading...</p>
+  <p>No doctors visited yet</p>
   }
-
+</li>
+<hr>
+<li class="list-group-item">
   <strong>Register a new note</strong>
   @if (patient) {
-  <app-note-create (reload)="onReload($event)" [patientId]="patientId" [hospitalId]="patient.hospitalId"/>
+  <app-note-create
+    (reload)="onReload($event)"
+    [patientId]="patientId"
+    [hospitalId]="patient.hospitalId"
+  ></app-note-create>
   }
-
+</li>
+<hr>
+<li class="list-group-item">
   <strong>History of notes</strong>
   @if (notes.length) {
-  <app-note-list [notes]="notes" />
+  <app-note-list [notes]="notes"></app-note-list>
+  } @else {
+    <p>There are no notes yet.</p>
   }
-</ul>
+</li>
+} @else {
+<p>Loading...</p>
+}
+<hr>

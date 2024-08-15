@@ -1,15 +1,28 @@
-<form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="description">Description:</label>
-    <input type="text" id="description" formControlName="description" />
+<form [formGroup]="noteForm" (ngSubmit)="onSubmit()" class="row">
+  <div class="col-md-6 mb-3">
+    <label for="description" class="form-label">Description:</label>
+    <input
+      type="text"
+      id="description"
+      formControlName="description"
+      class="form-control"
+    />
   </div>
-  <div>
-    <label for="noteDate">Date:</label>
-    <input type="date" id="noteDate" formControlName="noteDate" />
+
+  <div class="col-md-6 mb-3">
+    <label for="noteDate" class="form-label">Date:</label>
+    <input
+      type="date"
+      id="noteDate"
+      formControlName="noteDate"
+      class="form-control"
+    />
   </div>
-  <div>
-    <label for="doctorId">Doctor:</label>
-    <select formControlName="doctorId">
+
+  <div class="col-md-6 mb-3">
+    <label for="doctorId" class="form-label">Doctor:</label>
+    <select formControlName="doctorId" class="form-select">
+      <option value="">Select Doctor</option>
       @for (doctor of doctors; track $index) {
       <option [value]="doctor.id">
         {{ doctor.name }} {{ doctor.lastName }}
@@ -19,7 +32,14 @@
   </div>
 
   @if (errorMessage) {
-  <p>{{ errorMessage }}</p>
+  <div class="col-md-12 mb-3">
+    <p class="text-danger">{{ errorMessage }}</p>
+  </div>
   }
-  <button type="submit" [disabled]="noteForm.invalid">Create Speciality</button>
+
+  <div class="col-md-12">
+    <button type="submit" class="btn btn-primary" [disabled]="noteForm.invalid">
+      Create Note
+    </button>
+  </div>
 </form>
